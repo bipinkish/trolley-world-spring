@@ -64,23 +64,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
-                "https://trolley-world-api-production.up.railway.app",
-                "https://trolley-world-ui.vercel.app"  // example if you have frontend
-        ));  // or your real frontend URL(s)
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
-
-
-    @Bean
     public DefaultSecurityFilterChain securityWebFilterChain(HttpSecurity http) throws Exception {
 
 
@@ -96,7 +79,6 @@ public class SecurityConfig {
                     });
                 })
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         c -> c
                                 .requestMatchers("/swagger-ui/**").permitAll()
